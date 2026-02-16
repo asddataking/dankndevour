@@ -44,7 +44,7 @@ export function SiteHeader() {
             priority
           />
           <div>
-            <p className="text-xs text-white sm:text-sm">
+            <p className="text-sm text-white sm:text-base">
               Eat.Smoke.Repeat.
             </p>
           </div>

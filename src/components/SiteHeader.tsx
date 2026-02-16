@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
@@ -13,7 +14,6 @@ const CATEGORIES = [
 ] as const;
 
 export function SiteHeader() {
-  const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(searchParams.get("q") ?? "");
@@ -32,13 +32,20 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-surface-elevated bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
-        <Link href="/" className="shrink-0">
-          <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-            DANK <span className="text-accent">N</span> DEVOUR
-          </h1>
-          <p className="text-xs text-foreground-muted sm:text-sm">
-            FOOD. SMOKE. NO FILTER.
-          </p>
+        <Link href="/" className="flex shrink-0 items-center gap-3">
+          <Image
+            src="/DankNDevourlogo.png"
+            alt="Dank N Devour"
+            width={120}
+            height={48}
+            className="h-10 w-auto sm:h-12"
+            priority
+          />
+          <div>
+            <p className="text-xs text-foreground-muted sm:text-sm">
+              FOOD. SMOKE. NO FILTER.
+            </p>
+          </div>
         </Link>
         <nav className="flex flex-wrap items-center gap-2 text-sm">
           {CATEGORIES.map(({ label, slug }) => {

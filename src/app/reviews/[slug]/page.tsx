@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { getBaseUrl } from "@/lib/site";
 import { getReviewDetail, getReviewsList } from "@/lib/reviews";
 import { videoIdFromSlug } from "@/lib/youtube";
+import { DispoDealsCta } from "@/components/DispoDealsCta";
 import { PairingCard } from "@/components/PairingCard";
 import { RatingSummary } from "@/components/RatingSummary";
 import { RelatedReviews } from "@/components/RelatedReviews";
@@ -38,6 +41,51 @@ function sanitizeDescription(html: string): string {
     .trim();
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const videoId = videoIdFromSlug(slug);
+  if (!videoId) return { title: "Review" };
+
+  let detail: Awaited<ReturnType<typeof getReviewDetail>> = null;
+  try {
+    detail = await getReviewDetail(videoId);
+  } catch {
+    return { title: "Review" };
+  }
+  if (!detail) return { title: "Review" };
+
+  const baseUrl = getBaseUrl();
+  const canonicalUrl = `${baseUrl}/reviews/${detail.slug}`;
+  const thumb = thumbnailUrl(detail.thumbnails);
+  const title = `${detail.restaurant || detail.title} Review${detail.cityState ? ` (${detail.cityState})` : ""} — Dank or Devour?`;
+  const description = detail.cityState
+    ? `Video review of ${detail.restaurant || detail.title} in ${detail.cityState}. Watch the full review.`
+    : `Video review of ${detail.restaurant || detail.title}. Watch the full review.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `${title} | Dank N Devour`,
+      description,
+      url: canonicalUrl,
+      type: "video.other",
+      images: thumb ? [{ url: thumb, width: 1280, height: 720, alt: detail.restaurant || detail.title }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | Dank N Devour`,
+      description,
+      images: thumb ? [thumb] : undefined,
+    },
+    alternates: { canonical: canonicalUrl },
+  };
+}
+
 export default async function ReviewDetailPage({
   params,
 }: {
@@ -67,9 +115,48 @@ export default async function ReviewDetailPage({
   ).slice(0, 3);
   const thumb = thumbnailUrl(detail.thumbnails);
   const story = sanitizeDescription(detail.description);
+  const baseUrl = getBaseUrl();
+  const canonicalUrl = `${baseUrl}/reviews/${detail.slug}`;
+  const embedUrl = `https://www.youtube.com/embed/${detail.videoId}`;
+  const reviewName = detail.restaurant || detail.title;
+  const descriptionTruncated = (story || detail.description || "").slice(0, 500);
+
+  const videoObjectLd = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: reviewName,
+    description: descriptionTruncated,
+    thumbnailUrl: thumb || undefined,
+    uploadDate: detail.publishedAt,
+    embedUrl,
+    url: canonicalUrl,
+    publisher: { "@type": "Organization", name: "Dank N Devour" },
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: baseUrl },
+      { "@type": "ListItem", position: 2, name: "Reviews", item: `${baseUrl}/reviews` },
+      { "@type": "ListItem", position: 3, name: reviewName, item: canonicalUrl },
+    ],
+  };
 
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(videoObjectLd),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbLd),
+        }}
+      />
       <div className="border-b border-surface-elevated bg-surface">
         <div className="relative aspect-[21/9] max-h-[400px] w-full bg-background">
           {thumb ? (
@@ -131,6 +218,7 @@ export default async function ReviewDetailPage({
               showUnrated={true}
             />
             {detail.pairing && <PairingCard pairing={detail.pairing} />}
+            <DispoDealsCta variant="card" />
             <RelatedReviews
               reviews={allReviews}
               excludeVideoId={detail.videoId}

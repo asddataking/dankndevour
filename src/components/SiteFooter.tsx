@@ -20,6 +20,36 @@ export function SiteFooter() {
             </Link>
           </nav>
         </div>
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6 text-sm text-foreground-muted">
+          <span className="font-medium text-foreground">Network</span>
+          <a
+            href="https://dailydispodeals.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-accent"
+          >
+            Daily Dispo Deals
+          </a>
+          <a
+            href="https://annarborhashbash.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-accent"
+          >
+            Ann Arbor Hash Bash
+          </a>
+        </div>
+        <p className="mt-3 text-sm text-foreground-muted">
+          Going to Hash Bash weekend?{" "}
+          <a
+            href="https://annarborhashbash.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
+            Plan it here → AnnArborHashBash.com
+          </a>
+        </p>
         <p className="mt-4 text-center text-xs text-foreground-muted sm:text-left">
           © {new Date().getFullYear()} Dank N Devour. Food. Smoke. No Filter.
         </p>

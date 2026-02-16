@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { destinations } from "@/data/destinations";
 import { dispoPairings } from "@/data/dispoPairings";
 import { getProducts } from "@/lib/fourthwall";
@@ -6,6 +7,20 @@ import { Hero } from "@/components/Hero";
 import { MerchFallback } from "@/components/MerchFallback";
 import { MerchGrid } from "@/components/MerchGrid";
 import { ReviewCard } from "@/components/ReviewCard";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "Dank N Devour | Food. Smoke. No Filter.",
+  },
+  description:
+    "Video reviews and dispo pairings. Food. Smoke. No Filter.",
+  openGraph: {
+    title: "Dank N Devour | Food. Smoke. No Filter.",
+    description: "Video reviews and dispo pairings. Food. Smoke. No Filter.",
+    url: "/",
+  },
+  alternates: { canonical: "/" },
+};
 
 export default async function HomePage() {
   let reviews: Awaited<ReturnType<typeof getReviewsList>> = [];
@@ -63,6 +78,19 @@ export default async function HomePage() {
               )}
             </div>
           ))}
+        </div>
+        <div className="mt-6 rounded-lg border border-accent/30 bg-surface p-4">
+          <p className="text-sm text-foreground-muted">
+            Plan Hash Bash weekend →{" "}
+            <a
+              href="https://annarborhashbash.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-accent hover:underline"
+            >
+              AnnArborHashBash.com
+            </a>
+          </p>
         </div>
       </section>
 

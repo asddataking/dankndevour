@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
+import { getBaseUrl } from "@/lib/site";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
@@ -15,9 +16,40 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const baseUrl = getBaseUrl();
+
 export const metadata: Metadata = {
-  title: "Dank N Devour | Food. Smoke. No Filter.",
+  metadataBase: new URL(baseUrl),
+  title: {
+    default: "Dank N Devour | Food. Smoke. No Filter.",
+    template: "%s | Dank N Devour",
+  },
   description: "Restaurant reviews and dispo pairings. No filter.",
+  icons: {
+    icon: "/DankNDevourlogo.png",
+    apple: "/DankNDevourlogo.png",
+  },
+  openGraph: {
+    title: "Dank N Devour | Food. Smoke. No Filter.",
+    description: "Restaurant reviews and dispo pairings. No filter.",
+    siteName: "Dank N Devour",
+    type: "website",
+    url: "/",
+    images: [
+      {
+        url: "/DankNDevourlogo.png",
+        width: 1200,
+        height: 630,
+        alt: "Dank N Devour",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dank N Devour | Food. Smoke. No Filter.",
+    description: "Restaurant reviews and dispo pairings. No filter.",
+    images: ["/DankNDevourlogo.png"],
+  },
 };
 
 export default function RootLayout({

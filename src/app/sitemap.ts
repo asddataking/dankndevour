@@ -8,6 +8,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date() },
     { url: `${baseUrl}/reviews`, lastModified: new Date() },
+    { url: `${baseUrl}/certified-dank`, lastModified: new Date() },
+    { url: `${baseUrl}/hidden-gems`, lastModified: new Date() },
+    { url: `${baseUrl}/worth-the-drive`, lastModified: new Date() },
+    { url: `${baseUrl}/dispo-pairings`, lastModified: new Date() },
+    { url: `${baseUrl}/cities`, lastModified: new Date() },
   ];
 
   try {

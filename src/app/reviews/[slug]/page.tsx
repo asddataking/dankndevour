@@ -173,20 +173,32 @@ export default async function ReviewDetailPage({
               No image
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
             <div className="mx-auto max-w-7xl">
-              <h1 className="text-2xl font-bold text-foreground md:text-4xl">
-                {detail.restaurant || detail.title}
-              </h1>
-              {detail.cityState && (
-                <p className="mt-1 text-foreground-muted">{detail.cityState}</p>
-              )}
+              <div className="flex flex-wrap items-center gap-2">
+                <h1 className="text-2xl font-bold uppercase tracking-tight text-white md:text-4xl">
+                  {detail.restaurant || detail.title}
+                </h1>
+                {detail.cityState && (
+                  <span className="rounded bg-accent/20 px-2.5 py-1 text-sm font-medium uppercase tracking-wide text-accent">
+                    {detail.cityState}
+                  </span>
+                )}
+              </div>
               <span
-                className={`mt-3 inline-block rounded border px-3 py-1 text-sm font-semibold ${ratingBadgeClass(detail.rating)}`}
+                className={`mt-3 inline-flex items-center gap-1.5 rounded border px-3 py-1.5 text-sm font-semibold ${ratingBadgeClass(detail.rating)}`}
               >
-                {detail.rating}
+                <span aria-hidden>🔥</span>
+                {detail.rating === "DANK" || detail.rating === "MID" || detail.rating === "DEVOUR"
+                  ? `${detail.rating} REVIEW`
+                  : "Unrated"}
               </span>
+              {story && (
+                <p className="mt-3 max-w-2xl text-sm text-white/90 line-clamp-2">
+                  {story.split(/\n\n/)[0]?.replace(/\n/g, " ").trim() || story.slice(0, 200)}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -203,9 +215,16 @@ export default async function ReviewDetailPage({
                 allowFullScreen
               />
             </div>
+            <RatingSummary
+              scores={detail.scores}
+              showUnrated={true}
+              variant="compact"
+            />
             {story && (
               <div className="rounded-lg border border-surface-elevated bg-surface p-6">
-                <h2 className="mb-3 font-semibold text-foreground">Story</h2>
+                <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-foreground">
+                  Review
+                </h2>
                 <div className="whitespace-pre-wrap text-sm text-foreground-muted">
                   {story}
                 </div>

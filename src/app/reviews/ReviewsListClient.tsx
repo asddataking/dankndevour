@@ -6,36 +6,49 @@ import type { ReviewListItem } from "@/types/review";
 import { ReviewCard } from "@/components/ReviewCard";
 
 const PAGE_SIZE = 12;
-const CATEGORY_OPTIONS = [
-  { value: "", label: "All" },
+
+const FOOD_TYPE_CHIPS = [
   { value: "pizza", label: "Pizza" },
   { value: "tacos", label: "Tacos" },
   { value: "bbq", label: "BBQ" },
   { value: "burgers", label: "Burgers" },
   { value: "dispo-pairings", label: "Dispo Pairings" },
-];
-const RATING_OPTIONS = [
-  { value: "", label: "All" },
+] as const;
+
+const RATING_CHIPS = [
   { value: "DANK", label: "DANK" },
   { value: "MID", label: "MID" },
   { value: "DEVOUR", label: "DEVOUR" },
-  { value: "Unknown", label: "Unrated" },
-];
+] as const;
 
 export function ReviewsListClient({
   initialReviews,
+  presetRating,
+  presetCategory,
 }: {
   initialReviews: ReviewListItem[];
+  presetRating?: "DANK" | "MID" | "DEVOUR";
+  presetCategory?: string;
 }) {
   const searchParams = useSearchParams();
   const [category, setCategory] = useState(
-    () => searchParams.get("category") ?? ""
+    () => searchParams.get("category") ?? presetCategory ?? ""
   );
   const [cityQuery, setCityQuery] = useState(
     () => searchParams.get("q") ?? ""
   );
-  const [rating, setRating] = useState(() => searchParams.get("rating") ?? "");
+  const [rating, setRating] = useState(
+    () => searchParams.get("rating") ?? presetRating ?? ""
+  );
   const [visible, setVisible] = useState(PAGE_SIZE);
+
+  const uniqueCities = useMemo(() => {
+    const set = new Set<string>();
+    initialReviews.forEach((r) => {
+      if (r.cityState?.trim()) set.add(r.cityState.trim());
+    });
+    return Array.from(set).sort();
+  }, [initialReviews]);
 
   const filtered = useMemo(() => {
     let list = initialReviews;
@@ -70,6 +83,9 @@ export function ReviewsListClient({
     setVisible((v) => v + PAGE_SIZE);
   }, []);
 
+  const showRatingChips = presetRating === undefined;
+  const showCategoryChips = presetCategory === undefined;
+
   if (initialReviews.length === 0) {
     return (
       <p className="text-foreground-muted">
@@ -80,53 +96,107 @@ export function ReviewsListClient({
 
   return (
     <div>
-      <div className="mb-6 flex flex-wrap items-center gap-4">
-        <div className="flex items-center gap-2">
-          <label htmlFor="filter-category" className="text-sm text-foreground-muted">
-            Category
-          </label>
-          <select
-            id="filter-category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="rounded border border-surface-elevated bg-surface px-3 py-1.5 text-sm text-foreground"
-          >
-            {CATEGORY_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex items-center gap-2">
-          <label htmlFor="filter-city" className="text-sm text-foreground-muted">
-            Search
-          </label>
+      <div className="mb-6 space-y-4">
+        {showCategoryChips && (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs font-medium uppercase tracking-wide text-foreground-muted">
+              Food type
+            </span>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setCategory("")}
+                className={`rounded-full px-3 py-1.5 text-sm transition-colors ${
+                  !category
+                    ? "bg-accent/20 text-accent"
+                    : "bg-surface-elevated text-foreground-muted hover:bg-surface-elevated/80 hover:text-foreground"
+                }`}
+              >
+                All
+              </button>
+              {FOOD_TYPE_CHIPS.map(({ value, label }) => (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => setCategory(category === value ? "" : value)}
+                  className={`rounded-full px-3 py-1.5 text-sm transition-colors ${
+                    category === value
+                      ? "bg-accent/20 text-accent"
+                      : "bg-surface-elevated text-foreground-muted hover:bg-surface-elevated/80 hover:text-foreground"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        {showRatingChips && (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs font-medium uppercase tracking-wide text-foreground-muted">
+              Rating
+            </span>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setRating("")}
+                className={`rounded-full px-3 py-1.5 text-sm transition-colors ${
+                  !rating
+                    ? "bg-accent/20 text-accent"
+                    : "bg-surface-elevated text-foreground-muted hover:bg-surface-elevated/80 hover:text-foreground"
+                }`}
+              >
+                All
+              </button>
+              {RATING_CHIPS.map(({ value, label }) => (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => setRating(rating === value ? "" : value)}
+                  className={`rounded-full px-3 py-1.5 text-sm transition-colors ${
+                    rating === value
+                      ? "bg-accent/20 text-accent"
+                      : "bg-surface-elevated text-foreground-muted hover:bg-surface-elevated/80 hover:text-foreground"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-medium uppercase tracking-wide text-foreground-muted">
+            City
+          </span>
           <input
-            id="filter-city"
             type="text"
-            placeholder="City or restaurant..."
+            placeholder="Search city or restaurant..."
             value={cityQuery}
             onChange={(e) => setCityQuery(e.target.value)}
-            className="min-w-[160px] rounded border border-surface-elevated bg-surface px-3 py-1.5 text-sm text-foreground placeholder:text-foreground-muted"
+            className="min-w-[180px] rounded-full border border-surface-elevated bg-surface px-3 py-1.5 text-sm text-foreground placeholder:text-foreground-muted focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            aria-label="Search by city or restaurant"
           />
-        </div>
-        <div className="flex items-center gap-2">
-          <label htmlFor="filter-rating" className="text-sm text-foreground-muted">
-            Rating
-          </label>
-          <select
-            id="filter-rating"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-            className="rounded border border-surface-elevated bg-surface px-3 py-1.5 text-sm text-foreground"
-          >
-            {RATING_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
+          {uniqueCities.length > 0 && uniqueCities.length <= 12 && (
+            <div className="flex flex-wrap gap-2">
+              {uniqueCities.slice(0, 10).map((city) => (
+                <button
+                  key={city}
+                  type="button"
+                  onClick={() =>
+                    setCityQuery((c) => (c === city ? "" : city))
+                  }
+                  className={`rounded-full px-3 py-1.5 text-sm transition-colors ${
+                    cityQuery === city
+                      ? "bg-accent/20 text-accent"
+                      : "bg-surface-elevated text-foreground-muted hover:bg-surface-elevated/80 hover:text-foreground"
+                  }`}
+                >
+                  {city}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -147,7 +217,7 @@ export function ReviewsListClient({
           <button
             type="button"
             onClick={loadMore}
-            className="rounded border border-accent/40 bg-accent/10 px-6 py-2 font-medium text-accent transition-colors hover:bg-accent/20"
+            className="rounded-full border border-accent/40 bg-accent/10 px-6 py-2 font-medium text-accent transition-colors hover:bg-accent/20"
           >
             Load more
           </button>

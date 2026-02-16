@@ -2,18 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 
-const CATEGORIES = [
-  { label: "Pizza", slug: "pizza" },
-  { label: "Tacos", slug: "tacos" },
-  { label: "BBQ", slug: "bbq" },
-  { label: "Burgers", slug: "burgers" },
-  { label: "Dispo Pairings", slug: "dispo-pairings" },
+const NAV_ITEMS = [
+  { label: "Reviews", href: "/reviews" },
+  { label: "Certified Dank", href: "/certified-dank" },
+  { label: "Hidden Gems", href: "/hidden-gems" },
+  { label: "Worth the Drive", href: "/worth-the-drive" },
+  { label: "Dispo Pairings", href: "/dispo-pairings" },
+  { label: "Cities", href: "/cities" },
 ] as const;
 
 export function SiteHeader() {
+  const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(searchParams.get("q") ?? "");
@@ -38,22 +40,21 @@ export function SiteHeader() {
             alt="Dank N Devour"
             width={120}
             height={48}
-            className="h-10 w-auto sm:h-12"
+            className="h-10 w-auto sm:h-12 invert"
             priority
           />
           <div>
-            <p className="text-xs text-foreground-muted sm:text-sm">
-              FOOD. SMOKE. NO FILTER.
+            <p className="text-xs text-white sm:text-sm">
+              Eat.Smoke.Repeat.
             </p>
           </div>
         </Link>
         <nav className="flex flex-wrap items-center gap-2 text-sm">
-          {CATEGORIES.map(({ label, slug }) => {
-            const href = `/reviews?category=${slug}`;
-            const isActive = searchParams.get("category") === slug;
+          {NAV_ITEMS.map(({ label, href }) => {
+            const isActive = pathname === href;
             return (
               <Link
-                key={slug}
+                key={href}
                 href={href}
                 className={`rounded px-3 py-1.5 transition-colors ${
                   isActive

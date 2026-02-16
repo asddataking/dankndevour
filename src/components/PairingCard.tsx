@@ -4,7 +4,9 @@ export function PairingCard({ pairing }: { pairing?: PairingOverride }) {
   if (!pairing || (!pairing.strain && !pairing.dish)) return null;
   return (
     <div className="rounded-lg border border-surface-elevated bg-surface p-4">
-      <h3 className="font-semibold text-foreground">Paired With</h3>
+      <h3 className="font-semibold uppercase tracking-wide text-foreground">
+        Paired With
+      </h3>
       <dl className="mt-2 space-y-1 text-sm">
         {pairing.strain && (
           <div>

@@ -51,7 +51,7 @@ export function SiteFooter() {
           </a>
         </p>
         <p className="mt-4 text-center text-xs text-foreground-muted sm:text-left">
-          © {new Date().getFullYear()} Dank N Devour. Food. Smoke. No Filter.
+          © {new Date().getFullYear()} Dank N Devour. Eat. Smoke. Repeat.
         </p>
       </div>
     </footer>

@@ -3,6 +3,7 @@ import { Barlow_Condensed, Bricolage_Grotesque, Geist, Geist_Mono } from "next/f
 import Script from "next/script";
 import { Suspense } from "react";
 import { getBaseUrl } from "@/lib/site";
+import { createRootMetadata } from "@/lib/metadata";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
@@ -33,39 +34,7 @@ const baseUrl = getBaseUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
-  title: {
-    default: "Dank N Devour | Smoke. Eat. Explore.",
-    template: "%s | Dank N Devour",
-  },
-  description:
-    "Cannabis reviews, grow journals, Michigan adventures, and community-powered cannabis intelligence. Home of Dan's Smoke Review & Dan's Dank Grow.",
-  icons: {
-    icon: "/DankNDevourlogo.png",
-    apple: "/DankNDevourlogo.png",
-  },
-  openGraph: {
-    title: "Dank N Devour | Smoke. Eat. Explore.",
-    description:
-      "Cannabis reviews, grow journals, Michigan adventures, and community-powered cannabis intelligence.",
-    siteName: "Dank N Devour",
-    type: "website",
-    url: "/",
-    images: [
-      {
-        url: "/DankNDevourlogo.png",
-        width: 1200,
-        height: 630,
-        alt: "Dank N Devour",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Dank N Devour | Smoke. Eat. Explore.",
-    description:
-      "Cannabis reviews, grow journals, Michigan adventures, and community-powered cannabis intelligence.",
-    images: ["/DankNDevourlogo.png"],
-  },
+  ...createRootMetadata(),
 };
 
 export default function RootLayout({

@@ -1,20 +1,15 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { createPageMetadata } from "@/lib/metadata";
 import { getReviewsList } from "@/lib/reviews";
 import { ReviewsListClient } from "@/app/reviews/ReviewsListClient";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Worth the Drive",
   description:
-    "Spots that are worth the trip. Destination-worthy reviews.",
-  openGraph: {
-    title: "Worth the Drive | Dank N Devour",
-    description:
-      "Spots that are worth the trip. Destination-worthy reviews.",
-    url: "/worth-the-drive",
-  },
-  alternates: { canonical: "/worth-the-drive" },
-};
+    "Destination-worthy Michigan spots that are worth the trip. Reviews from Dank N Devour.",
+  path: "/worth-the-drive",
+});
 
 export default async function WorthTheDrivePage() {
   let reviews: Awaited<ReturnType<typeof getReviewsList>> = [];

@@ -1,20 +1,15 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { createPageMetadata } from "@/lib/metadata";
 import { getReviewsList } from "@/lib/reviews";
 import { ReviewsListClient } from "./ReviewsListClient";
 
-export const metadata: Metadata = {
-  title: "Reviews",
+export const metadata: Metadata = createPageMetadata({
+  title: "Dan's Smoke Review",
   description:
-    "Watch our video reviews and dispo pairings. Restaurant reviews with no filter.",
-  openGraph: {
-    title: "Reviews | Dank N Devour",
-    description:
-      "Watch our video reviews and dispo pairings. Restaurant reviews with no filter.",
-    url: "/reviews",
-  },
-  alternates: { canonical: "/reviews" },
-};
+    "Watch honest cannabis reviews, smoke tests, livestream clips, and podcasts from Dank N Devour.",
+  path: "/reviews",
+});
 
 export default async function ReviewsPage() {
   let reviews: Awaited<ReturnType<typeof getReviewsList>> = [];

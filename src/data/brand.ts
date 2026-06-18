@@ -1,12 +1,26 @@
 export const BRAND = {
   name: "Dank N Devour",
   tagline: "Smoke. Eat. Explore.",
-  headerTagline: "CANNABIS. FOOD. ADVENTURE.",
+  headerTagline: "Smoke. Eat. Explore",
   subtagline: "Home of Dan's Smoke Review & Dan's Dank Grow",
   description:
     "Honest reviews. Good vibes. Great food. Michigan adventures.",
+  metaDescription:
+    "Cannabis reviews, grow journals, Michigan food adventures, and community-powered cannabis intelligence. Home of Dan's Smoke Review & Dan's Dank Grow.",
   heroTitle: "Welcome to Dank N Devour",
   footerTagline: "Real Reviews. Real Experiences. Real Life.",
+  keywords: [
+    "cannabis reviews",
+    "Michigan cannabis",
+    "food reviews",
+    "grow journal",
+    "Dan's Smoke Review",
+    "Dank N Devour",
+    "BoofMap",
+    "dispensary reviews",
+    "Michigan adventures",
+    "cannabis podcast",
+  ],
 } as const;
 
 export const SOCIAL_LINKS = {

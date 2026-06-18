@@ -7,22 +7,11 @@ import { FeatureGrid } from "@/components/home/FeatureGrid";
 import { HomeHero } from "@/components/home/HomeHero";
 import { LatestEpisodes } from "@/components/home/LatestEpisodes";
 import { WakeNBakeAdvert } from "@/components/home/WakeNBakeAdvert";
-import { BRAND } from "@/data/brand";
+import { createHomeMetadata } from "@/lib/metadata";
 import { getProducts } from "@/lib/fourthwall";
 import { getReviewsList } from "@/lib/reviews";
 
-export const metadata: Metadata = {
-  title: {
-    absolute: `Dank N Devour | ${BRAND.tagline}`,
-  },
-  description: BRAND.description,
-  openGraph: {
-    title: `Dank N Devour | ${BRAND.tagline}`,
-    description: BRAND.description,
-    url: "/",
-  },
-  alternates: { canonical: "/" },
-};
+export const metadata: Metadata = createHomeMetadata();
 
 export default async function HomePage() {
   let reviews: Awaited<ReturnType<typeof getReviewsList>> = [];

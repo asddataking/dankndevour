@@ -1,20 +1,15 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { createPageMetadata } from "@/lib/metadata";
 import { getReviewsList } from "@/lib/reviews";
 import { ReviewsListClient } from "@/app/reviews/ReviewsListClient";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Hidden Gems",
   description:
-    "Under-the-radar spots worth seeking out. Hidden gems from our reviews.",
-  openGraph: {
-    title: "Hidden Gems | Dank N Devour",
-    description:
-      "Under-the-radar spots worth seeking out. Hidden gems from our reviews.",
-    url: "/hidden-gems",
-  },
-  alternates: { canonical: "/hidden-gems" },
-};
+    "Under-the-radar Michigan spots worth seeking out. Hidden gems from Dank N Devour reviews.",
+  path: "/hidden-gems",
+});
 
 export default async function HiddenGemsPage() {
   let reviews: Awaited<ReturnType<typeof getReviewsList>> = [];

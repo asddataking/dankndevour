@@ -1,20 +1,15 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { createPageMetadata } from "@/lib/metadata";
 import { getReviewsList } from "@/lib/reviews";
 import { ReviewsListClient } from "@/app/reviews/ReviewsListClient";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Certified Dank",
   description:
-    "Our highest-rated spots. Only the best make the Certified Dank list.",
-  openGraph: {
-    title: "Certified Dank | Dank N Devour",
-    description:
-      "Our highest-rated spots. Only the best make the Certified Dank list.",
-    url: "/certified-dank",
-  },
-  alternates: { canonical: "/certified-dank" },
-};
+    "Our highest-rated cannabis and food spots. Only the best make the Certified Dank list.",
+  path: "/certified-dank",
+});
 
 export default async function CertifiedDankPage() {
   let reviews: Awaited<ReturnType<typeof getReviewsList>> = [];

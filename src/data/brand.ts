@@ -128,6 +128,25 @@ export const BOOFMAP_STATS = [
   { label: "Dispensaries", value: "198" },
 ] as const;
 
+export const BOOFMAP_FEATURES = [
+  { title: "Top Strains", description: "Community-ranked favorites" },
+  { title: "Latest Reports", description: "Fresh intel from the field" },
+  { title: "Top Brands", description: "Trusted producers & labels" },
+  {
+    title: "Community Intelligence",
+    description: "Crowdsourced cannabis data",
+  },
+] as const;
+
+export const EXPLORE_CONTENT = [
+  { title: "Dispensary Tours", emoji: "🏪" },
+  { title: "Events", emoji: "🎉" },
+  { title: "Festivals", emoji: "🎪" },
+  { title: "Camping Trips", emoji: "⛺" },
+  { title: "Cannabis Tourism", emoji: "🗺️" },
+  { title: "Local Discoveries", emoji: "💎" },
+] as const;
+
 export const GROW_STAGES = [
   { emoji: "🧬", label: "Genetics" },
   { emoji: "🌱", label: "Early Growth" },

@@ -13,7 +13,7 @@ export const SOCIAL_LINKS = {
   youtube:
     process.env.NEXT_PUBLIC_YOUTUBE_URL ??
     "https://www.youtube.com/@DankNDevour",
-  kick: process.env.NEXT_PUBLIC_KICK_URL ?? "https://kick.com/dankndevour",
+  kick: process.env.NEXT_PUBLIC_KICK_URL ?? "https://kick.com/danssmokereview",
   spotify:
     process.env.NEXT_PUBLIC_SPOTIFY_URL ??
     "https://open.spotify.com/show/dankndevour",

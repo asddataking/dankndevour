@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  BOOFMAP_STATS,
   EXTERNAL_LINKS,
   FALLBACK_MERCH,
   SITE_IMAGES,
@@ -40,30 +39,19 @@ export function FeatureGrid({
         >
           <Image
             src={SITE_IMAGES.featureBoofmap}
-            alt=""
+            alt="BoofMap cannabis intelligence platform — Find Fire. Avoid Boof."
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
             sizes="33vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
           <div className="relative flex h-full flex-col justify-end p-6">
             <p className="font-nav text-sm text-accent">Cannabis Intelligence</p>
             <h3 className="font-display mt-2 text-3xl uppercase text-white">
               BoofMap
             </h3>
             <p className="mt-2 text-sm text-white/70">Find fire. Avoid boof.</p>
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              {BOOFMAP_STATS.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-lg border border-white/10 bg-black/50 p-3 backdrop-blur-sm"
-                >
-                  <p className="font-nav text-xl text-accent">{stat.value}</p>
-                  <p className="text-xs text-white/60">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-            <span className="btn-primary mt-6">Browse Top Strains</span>
+            <span className="btn-primary mt-6">Open BoofMap</span>
           </div>
         </a>
 

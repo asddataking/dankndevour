@@ -60,7 +60,7 @@ export const SITE_IMAGES = {
   hero: "/images/hero.jpg",
   newsletter: "/images/newsletter-creator.jpg",
   featureExplore: "/images/feature-explore.jpg",
-  featureBoofmap: "/images/feature-boofmap.jpg",
+  featureBoofmap: "/images/feature-boofmap.png",
   featureGrow: "/images/feature-grow.jpg",
   wakeNBakeLogo: "/images/wakenbake-logo-no-person.png",
   wakeNBakeLogoFull: "/images/wakenbake-logo.png",
@@ -135,12 +135,6 @@ export const CATEGORY_CARDS: CategoryCard[] = [
   },
 ];
 
-export const BOOFMAP_STATS = [
-  { label: "Strains", value: "2,431" },
-  { label: "Reviews", value: "1,286" },
-  { label: "Brands", value: "512" },
-  { label: "Dispensaries", value: "198" },
-] as const;
 
 export const BOOFMAP_FEATURES = [
   { title: "Top Strains", description: "Community-ranked favorites" },

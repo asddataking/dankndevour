@@ -6,6 +6,7 @@ import { FeaturedRow } from "@/components/home/FeaturedRow";
 import { FeatureGrid } from "@/components/home/FeatureGrid";
 import { HomeHero } from "@/components/home/HomeHero";
 import { LatestEpisodes } from "@/components/home/LatestEpisodes";
+import { WakeNBakeAdvert } from "@/components/home/WakeNBakeAdvert";
 import { BRAND } from "@/data/brand";
 import { getProducts } from "@/lib/fourthwall";
 import { getReviewsList } from "@/lib/reviews";
@@ -49,6 +50,7 @@ export default async function HomePage() {
       <FeatureGrid products={products} />
       <DankGrowSection />
       <DevourSection />
+      <WakeNBakeAdvert />
     </div>
   );
 }

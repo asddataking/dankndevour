@@ -5,6 +5,7 @@ import {
   FOOTER_QUICK_LINKS,
   FOOTER_RESOURCES,
   FOOTER_SUPPORT,
+  SITE_IMAGES,
   SOCIAL_LINKS,
 } from "@/data/brand";
 import { EmailSignup } from "@/components/home/EmailSignup";
@@ -66,10 +67,23 @@ export function SiteFooter() {
             </p>
           </div>
 
-          <p className="mt-6 text-xs text-foreground-muted/60">
-            Future Projects: Wake N Bake Coffee —{" "}
-            <span className="italic">Roasting Soon.</span>
-          </p>
+          <div className="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <div className="flex items-center gap-4">
+              <Image
+                src={SITE_IMAGES.wakeNBakeLogo}
+                alt="Wake N Bake Coffee Co."
+                width={72}
+                height={72}
+                className="h-16 w-16 rounded-full object-cover"
+              />
+              <p className="text-xs text-foreground-muted/60">
+                Future Projects:{" "}
+                <span className="text-foreground-muted">Wake N Bake Coffee</span>
+                {" — "}
+                <span className="italic">Roasting Soon.</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

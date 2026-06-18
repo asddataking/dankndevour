@@ -50,7 +50,7 @@ export function EmailSignup() {
         <div className="relative hidden min-h-[320px] overflow-hidden rounded-2xl lg:block">
           <Image
             src={SITE_IMAGES.newsletter}
-            alt="Dank N Devour creator"
+            alt="Dan — Dank N Devour"
             fill
             className="object-cover object-top"
             sizes="(max-width: 1024px) 0vw, 40vw"

@@ -48,6 +48,8 @@ export const SITE_IMAGES = {
   featureExplore: "/images/feature-explore.jpg",
   featureBoofmap: "/images/feature-boofmap.jpg",
   featureGrow: "/images/feature-grow.jpg",
+  wakeNBakeLogo: "/images/wakenbake-logo-no-person.png",
+  wakeNBakeLogoFull: "/images/wakenbake-logo.png",
 } as const;
 
 export interface CategoryCard {

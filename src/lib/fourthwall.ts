@@ -32,7 +32,8 @@ export async function getProducts(
     };
     const results = data.results ?? [];
     const shopUrl =
-      process.env.NEXT_PUBLIC_FOURTHWALL_SHOP_URL?.replace(/\/$/, "") || "";
+      process.env.NEXT_PUBLIC_FOURTHWALL_SHOP_URL?.replace(/\/$/, "") ||
+      "https://dankndevour-shop.fourthwall.com";
     const products: FourthwallProduct[] = results.slice(0, limit).map((p) => {
       const firstImage = p.images?.[0];
       const imageUrl = firstImage?.transformedUrl || firstImage?.url || "";

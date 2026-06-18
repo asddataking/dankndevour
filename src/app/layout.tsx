@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Barlow_Condensed, Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
 import { getBaseUrl } from "@/lib/site";
@@ -17,22 +17,36 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+});
+
+const barlowCondensed = Barlow_Condensed({
+  variable: "--font-barlow-condensed",
+  weight: ["500", "600", "700"],
+  subsets: ["latin"],
+});
+
 const baseUrl = getBaseUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Dank N Devour | Food. Smoke. No Filter.",
+    default: "Dank N Devour | Smoke. Eat. Explore.",
     template: "%s | Dank N Devour",
   },
-  description: "Restaurant reviews and dispo pairings. No filter.",
+  description:
+    "Cannabis reviews, grow journals, Michigan adventures, and community-powered cannabis intelligence. Home of Dan's Smoke Review & Dan's Dank Grow.",
   icons: {
     icon: "/DankNDevourlogo.png",
     apple: "/DankNDevourlogo.png",
   },
   openGraph: {
-    title: "Dank N Devour | Food. Smoke. No Filter.",
-    description: "Restaurant reviews and dispo pairings. No filter.",
+    title: "Dank N Devour | Smoke. Eat. Explore.",
+    description:
+      "Cannabis reviews, grow journals, Michigan adventures, and community-powered cannabis intelligence.",
     siteName: "Dank N Devour",
     type: "website",
     url: "/",
@@ -47,8 +61,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dank N Devour | Food. Smoke. No Filter.",
-    description: "Restaurant reviews and dispo pairings. No filter.",
+    title: "Dank N Devour | Smoke. Eat. Explore.",
+    description:
+      "Cannabis reviews, grow journals, Michigan adventures, and community-powered cannabis intelligence.",
     images: ["/DankNDevourlogo.png"],
   },
 };
@@ -63,7 +78,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} ${barlowCondensed.variable} flex min-h-screen flex-col antialiased`}
       >
         <Script
           id="gtag-init"

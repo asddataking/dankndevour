@@ -1,59 +1,117 @@
+import Image from "next/image";
 import Link from "next/link";
+import {
+  BRAND,
+  FOOTER_QUICK_LINKS,
+  FOOTER_RESOURCES,
+  FOOTER_SUPPORT,
+  SOCIAL_LINKS,
+} from "@/data/brand";
+import { EmailSignup } from "@/components/home/EmailSignup";
+
+const SOCIAL_ITEMS = [
+  { label: "Kick", href: SOCIAL_LINKS.kick },
+  { label: "YouTube", href: SOCIAL_LINKS.youtube },
+  { label: "Spotify", href: SOCIAL_LINKS.spotify },
+  { label: "iHeartRadio", href: SOCIAL_LINKS.iheartradio },
+  { label: "TikTok", href: SOCIAL_LINKS.tiktok },
+  { label: "Instagram", href: SOCIAL_LINKS.instagram },
+] as const;
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto border-t border-surface-elevated bg-surface">
-      <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <Link
-            href="/"
-            className="text-sm font-semibold text-foreground hover:text-accent"
-          >
-            DANK <span className="text-accent">N</span> DEVOUR
-          </Link>
-          <nav className="flex gap-6 text-sm text-foreground-muted">
-            <Link href="/" className="hover:text-foreground">
-              Home
-            </Link>
-            <Link href="/reviews" className="hover:text-foreground">
-              Reviews
-            </Link>
-          </nav>
+    <footer className="mt-auto bg-black">
+      <EmailSignup />
+
+      <div className="border-t border-white/5">
+        <div className="mx-auto max-w-[1400px] px-4 py-10">
+          <p className="font-nav mb-4 text-sm tracking-[0.2em] text-foreground-muted">
+            Follow &amp; Watch
+          </p>
+          <div className="mb-10 flex flex-wrap gap-3">
+            {SOCIAL_ITEMS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+
+          <div className="grid gap-8 sm:grid-cols-3">
+            <FooterColumn title="Quick Links" items={FOOTER_QUICK_LINKS} />
+            <FooterColumn title="Resources" items={FOOTER_RESOURCES} />
+            <FooterColumn title="Support" items={FOOTER_SUPPORT} />
+          </div>
+
+          <div className="mt-12 flex flex-col items-start justify-between gap-6 border-t border-white/5 pt-8 md:flex-row md:items-end">
+            <div className="flex items-center gap-4">
+              <Image
+                src="/DankNDevourlogo.png"
+                alt="Dank N Devour"
+                width={80}
+                height={32}
+                className="h-8 w-auto invert"
+              />
+              <p className="text-xs text-foreground-muted">
+                © {new Date().getFullYear()} Dank N Devour
+              </p>
+            </div>
+            <p className="font-display text-xl text-accent neon-text md:text-2xl">
+              {BRAND.footerTagline}
+            </p>
+          </div>
+
+          <p className="mt-6 text-xs text-foreground-muted/60">
+            Future Projects: Wake N Bake Coffee —{" "}
+            <span className="italic">Roasting Soon.</span>
+          </p>
         </div>
-        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6 text-sm text-foreground-muted">
-          <span className="font-medium text-foreground">Network</span>
-          <a
-            href="https://dailydispodeals.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-accent"
-          >
-            Daily Dispo Deals
-          </a>
-          <a
-            href="https://annarborhashbash.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-accent"
-          >
-            Ann Arbor Hash Bash
-          </a>
-        </div>
-        <p className="mt-3 text-sm text-foreground-muted">
-          Going to Hash Bash weekend?{" "}
-          <a
-            href="https://annarborhashbash.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:underline"
-          >
-            Plan it here → AnnArborHashBash.com
-          </a>
-        </p>
-        <p className="mt-4 text-center text-xs text-foreground-muted sm:text-left">
-          © {new Date().getFullYear()} Dank N Devour. Eat. Smoke. Repeat.
-        </p>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({
+  title,
+  items,
+}: {
+  title: string;
+  items: ReadonlyArray<{
+    label: string;
+    href: string;
+    external?: boolean;
+  }>;
+}) {
+  return (
+    <nav>
+      <p className="font-nav mb-3 text-sm tracking-[0.15em] text-foreground">
+        {title}
+      </p>
+      <ul className="flex flex-col gap-2 text-sm text-foreground-muted">
+        {items.map((item) => (
+          <li key={item.label}>
+            {item.external ? (
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link href={item.href} className="hover:text-accent">
+                {item.label}
+              </Link>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
